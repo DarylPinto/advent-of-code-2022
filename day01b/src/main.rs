@@ -25,7 +25,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn day01a() {
+    fn day01b() {
         let input = include_str!("../sample.txt");
         let answer = puzzle(input);
         assert_eq!(answer, 45000);

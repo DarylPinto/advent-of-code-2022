@@ -4,8 +4,8 @@ fn main() {
     println!("{answer}");
 }
 
-fn puzzle(input: &str) -> i32 {
-    unimplemented!()
+fn puzzle(_input: &str) -> i32 {
+    0
 }
 
 #[cfg(test)]
@@ -13,9 +13,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn day01a() {
+    fn template() {
         let input = include_str!("../sample.txt");
         let answer = puzzle(input);
-        assert_eq!(answer, ());
+        assert_eq!(answer, 0);
     }
 }
