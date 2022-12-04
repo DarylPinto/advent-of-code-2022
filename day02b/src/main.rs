@@ -4,27 +4,25 @@ fn main() {
     println!("{answer}");
 }
 
-fn calculate_score(weapons: (&str, &str)) -> i32 {
-    match weapons {
-        ("A", "X") => 3,
-        ("A", "Y") => 4,
-        ("A", "Z") => 8,
-
-        ("B", "X") => 1,
-        ("B", "Y") => 5,
-        ("B", "Z") => 9,
-
-        ("C", "X") => 2,
-        ("C", "Y") => 6,
-        ("C", "Z") => 7,
-        _ => unreachable!(),
-    }
-}
-
 fn puzzle(input: &str) -> i32 {
     input
         .lines()
-        .filter_map(|line| line.split_once(' ').map(calculate_score))
+        .filter_map(|line| {
+            line.split_once(' ').map(|weapons| match weapons {
+                ("A", "X") => 3,
+                ("A", "Y") => 4,
+                ("A", "Z") => 8,
+
+                ("B", "X") => 1,
+                ("B", "Y") => 5,
+                ("B", "Z") => 9,
+
+                ("C", "X") => 2,
+                ("C", "Y") => 6,
+                ("C", "Z") => 7,
+                _ => unreachable!(),
+            })
+        })
         .sum()
 }
 

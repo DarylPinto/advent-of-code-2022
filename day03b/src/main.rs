@@ -20,9 +20,7 @@ fn puzzle(input: &str) -> usize {
         .filter_map(|slices| {
             slices[0]
                 .chars()
-                .filter(|&char| slices[1].contains(char) && slices[2].contains(char))
-                .into_iter()
-                .next()
+                .find(|&char| slices[1].contains(char) && slices[2].contains(char))
         })
         .map(to_priority)
         .sum()

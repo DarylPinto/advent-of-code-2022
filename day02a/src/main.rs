@@ -23,10 +23,9 @@ fn puzzle(input: &str) -> i32 {
             line.split_once(' ').and_then(|(their_weapon, my_weapon)| {
                 let my_weapon: Weapon = my_weapon.try_into().ok()?;
                 let their_weapon: Weapon = their_weapon.try_into().ok()?;
-                Some((their_weapon, my_weapon))
+                Some(calculate_score((their_weapon, my_weapon)))
             })
         })
-        .map(calculate_score)
         .sum()
 }
 

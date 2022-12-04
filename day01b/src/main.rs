@@ -17,7 +17,7 @@ fn puzzle(input: &str) -> i32 {
 
     calorie_sum_list.sort_unstable();
 
-    calorie_sum_list.into_iter().rev().take(3).sum()
+    calorie_sum_list.iter().rev().take(3).sum()
 }
 
 #[cfg(test)]
