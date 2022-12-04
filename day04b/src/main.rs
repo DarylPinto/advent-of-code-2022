@@ -18,13 +18,12 @@ fn puzzle(input: &str) -> usize {
                 })
                 .collect::<Vec<_>>();
 
-            let assignment_one = assignments[0][0]..=assignments[0][1];
-            let assignment_two = assignments[1][0]..=assignments[1][1];
+            let x1 = assignments[0][0];
+            let x2 = assignments[0][1];
+            let y1 = assignments[1][0];
+            let y2 = assignments[1][1];
 
-            assignment_one
-                .filter(|n| assignment_two.contains(n))
-                .next()
-                .is_some()
+            !(x2 < y1 || x1 > y2)
         })
         .count()
 }
