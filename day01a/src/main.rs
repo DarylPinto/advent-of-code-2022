@@ -12,8 +12,7 @@ fn puzzle(input: &str) -> i32 {
 
     let calorie_sum_list = calorie_list
         .split(|item| item.is_none())
-        .map(|x| x.iter().filter_map(|&y| y).sum::<i32>())
-        .collect::<Vec<_>>();
+        .map(|x| x.iter().filter_map(|&y| y).sum::<i32>());
 
     calorie_sum_list.into_iter().max().unwrap_or_default()
 }
