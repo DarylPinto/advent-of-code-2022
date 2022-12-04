@@ -27,13 +27,20 @@ fn puzzle(input: &str) -> usize {
 }
 
 #[cfg(test)]
-mod tests {
+mod day03a {
     use super::*;
 
     #[test]
-    fn template() {
+    fn works_with_sample_input() {
         let input = include_str!("../sample.txt");
         let answer = puzzle(input);
         assert_eq!(answer, 157);
+    }
+
+    #[test]
+    fn works_with_puzzle_input() {
+        let input = include_str!("../input.txt");
+        let answer = puzzle(input);
+        assert_eq!(answer, 7737);
     }
 }

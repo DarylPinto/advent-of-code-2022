@@ -19,13 +19,20 @@ fn puzzle(input: &str) -> i32 {
 }
 
 #[cfg(test)]
-mod tests {
+mod day01a {
     use super::*;
 
     #[test]
-    fn day01a() {
+    fn works_with_sample_input() {
         let input = include_str!("../sample.txt");
         let answer = puzzle(input);
         assert_eq!(answer, 24000);
+    }
+
+    #[test]
+    fn works_with_puzzle_input() {
+        let input = include_str!("../input.txt");
+        let answer = puzzle(input);
+        assert_eq!(answer, 75501);
     }
 }
