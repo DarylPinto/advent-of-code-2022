@@ -10,19 +10,16 @@ fn main() {
 }
 
 fn puzzle(input: &str) -> Option<usize> {
-    let offset = input
+    input
         .as_bytes()
         .windows(WINDOW_SIZE)
-        .enumerate()
-        .find(|(_, window)| {
-            let mut bytes: Vec<_> = window.iter().collect();
+        .position(|window| {
+            let mut bytes = window.to_vec();
             bytes.sort_unstable();
             bytes.dedup();
             bytes.len() == WINDOW_SIZE
-        })?
-        .0;
-
-    Some(WINDOW_SIZE + offset)
+        })
+        .map(|index| index + WINDOW_SIZE)
 }
 
 #[cfg(test)]

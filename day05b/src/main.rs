@@ -57,13 +57,13 @@ fn puzzle(input: &str) -> Option<String> {
                 acc.iter()
                     .enumerate()
                     .map(|(i, stack)| {
-                        Vec::from(if &i == from {
-                            source
+                        if &i == from {
+                            source.to_vec()
                         } else if &i == to {
-                            &dest
+                            dest.clone()
                         } else {
-                            stack
-                        })
+                            stack.to_vec()
+                        }
                     })
                     .collect::<Vec<_>>()
             })
