@@ -6,9 +6,8 @@ fn main() {
 
 fn to_priority(letter: char) -> usize {
     "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        .as_bytes()
-        .iter()
-        .position(|&byte| letter as u8 == byte)
+        .chars()
+        .position(|c| letter == c)
         .unwrap_or(0)
 }
 
