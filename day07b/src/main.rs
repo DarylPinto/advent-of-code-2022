@@ -8,7 +8,7 @@ fn main() {
     println!("{answer:?}");
 }
 
-fn puzzle(input: &str) -> Result<i32, String> {
+fn puzzle(input: &str) -> Result<usize, String> {
     let lines = input
         .lines()
         .filter_map(|line| TerminalLine::try_from(line).ok());
@@ -54,28 +54,43 @@ fn puzzle(input: &str) -> Result<i32, String> {
         };
     }
 
-    Ok(memory
+    let disk_capacity = 70_000_000;
+    let disk_usage = memory[0].total_size(&memory);
+    let free_disk_space = disk_capacity - disk_usage;
+    let update_size = 30_000_000;
+
+    let required_space_for_update = update_size - free_disk_space;
+
+    let mut node_sizes = memory
         .iter()
-        .map(|node| node.total_size(&memory) as i32)
-        .filter(|&size| size < 100_000)
-        .sum())
+        .map(|node| node.total_size(&memory))
+        .collect::<Vec<_>>();
+
+    node_sizes.sort_unstable();
+
+    Ok(node_sizes
+        .iter()
+        .filter(|&&size| size > required_space_for_update)
+        .map(|&size| size)
+        .next()
+        .ok_or("No single directory big enough to make room by deleting")?)
 }
 
 #[cfg(test)]
-mod day07a {
+mod day07b {
     use super::*;
 
     #[test]
     fn works_with_sample_input() {
         let input = include_str!("../sample.txt");
         let answer = puzzle(input);
-        assert_eq!(answer, Ok(95_437));
+        assert_eq!(answer, Ok(24_933_642));
     }
 
     #[test]
     fn works_with_puzzle_input() {
         let input = include_str!("../input.txt");
         let answer = puzzle(input);
-        assert_eq!(answer, Ok(1_367_870));
+        assert_eq!(answer, Ok(549_173));
     }
 }
