@@ -18,7 +18,7 @@ pub fn rotate<T: Clone + Copy>(matrix: &[Vec<T>]) -> Vec<Vec<T>> {
 }
 
 #[cfg(test)]
-mod transform {
+mod matrix {
     #[test]
     fn transpose() {
         #[rustfmt::skip]

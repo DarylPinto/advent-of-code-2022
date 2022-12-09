@@ -1,4 +1,4 @@
-mod matrix;
+use utils::matrix;
 use std::collections::HashSet;
 
 fn main() {
@@ -34,10 +34,7 @@ fn puzzle(input: &str) -> usize {
         .map(|(i, row)| {
             row.chars()
                 .enumerate()
-                .filter_map(move |(j, tree)| {
-                    let tree = tree.to_digit(10)?;
-                    Some(Tree((i, j), tree as i32))
-                })
+                .filter_map(move |(j, char)| Some(Tree((i, j), char.to_digit(10)? as i32)))
                 .collect::<Vec<_>>()
         })
         .collect::<Vec<_>>();

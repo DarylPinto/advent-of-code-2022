@@ -1,4 +1,4 @@
-mod matrix;
+use utils::matrix;
 
 fn main() {
     let input = include_str!("../input.txt");
