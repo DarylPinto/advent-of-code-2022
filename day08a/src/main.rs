@@ -10,7 +10,7 @@ fn main() {
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
 struct Tree((usize, usize), i32);
 
-/// Used as second argument in a `Iterator<Tree>.fold()` fn
+/// Used as second argument in an `Iterator<Tree>.fold()` fn
 /// Reduces into a tuple containing:
 /// - Height of the highest tree in the iterator
 /// - Vector of all trees that can be seen from the start of the iterator
@@ -42,34 +42,35 @@ fn puzzle(input: &str) -> usize {
         })
         .collect::<Vec<_>>();
 
-    let transposed_forest = matrix::transpose(&forest);
+    let forest_transpose = matrix::transpose(&forest);
 
-    vec![
-        forest
-            .iter()
-            .map(|row| row.iter().fold((-1, vec![]), into_visible_trees).1)
-            .flatten()
-            .collect::<Vec<_>>(),
-        forest
-            .iter()
-            .map(|row| row.iter().rev().fold((-1, vec![]), into_visible_trees).1)
-            .flatten()
-            .collect::<Vec<_>>(),
-        transposed_forest
-            .iter()
-            .map(|row| row.iter().fold((-1, vec![]), into_visible_trees).1)
-            .flatten()
-            .collect::<Vec<_>>(),
-        transposed_forest
-            .iter()
-            .map(|row| row.iter().rev().fold((-1, vec![]), into_visible_trees).1)
-            .flatten()
-            .collect::<Vec<_>>(),
-    ]
-    .into_iter()
-    .flatten()
-    .collect::<HashSet<Tree>>()
-    .len()
+    std::iter::empty()
+        .chain(
+            forest
+                .iter()
+                .map(|row| row.iter().fold((-1, vec![]), into_visible_trees).1)
+                .flatten(),
+        )
+        .chain(
+            forest
+                .iter()
+                .map(|row| row.iter().rev().fold((-1, vec![]), into_visible_trees).1)
+                .flatten(),
+        )
+        .chain(
+            forest_transpose
+                .iter()
+                .map(|row| row.iter().fold((-1, vec![]), into_visible_trees).1)
+                .flatten(),
+        )
+        .chain(
+            forest_transpose
+                .iter()
+                .map(|row| row.iter().rev().fold((-1, vec![]), into_visible_trees).1)
+                .flatten(),
+        )
+        .collect::<HashSet<Tree>>()
+        .len()
 }
 
 #[cfg(test)]
