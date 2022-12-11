@@ -66,12 +66,12 @@ fn puzzle(input: &str) -> usize {
         .fold(
             vec![(Knot::default(), Knot::default())],
             |visited, (direction, amount)| {
-                let mut visited = visited.clone();
+                let mut visited = visited;
 
                 (0..amount).for_each(|_| {
                     let (head, tail) = visited.last().unwrap();
-                    let next_head = move_head(&head, &direction);
-                    let next_tail = move_tail(&tail, &next_head);
+                    let next_head = move_head(head, &direction);
+                    let next_tail = move_tail(tail, &next_head);
                     visited.push((next_head, next_tail));
                 });
 

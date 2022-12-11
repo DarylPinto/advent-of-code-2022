@@ -71,7 +71,7 @@ fn puzzle(input: &str) -> Result<usize, String> {
     Ok(node_sizes
         .iter()
         .filter(|&&size| size > required_space_for_update)
-        .map(|&size| size)
+        .copied()
         .next()
         .ok_or("No single directory big enough to make room by deleting")?)
 }

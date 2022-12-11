@@ -1,5 +1,5 @@
-use utils::matrix;
 use std::collections::HashSet;
+use utils::matrix;
 
 fn main() {
     let input = include_str!("../input.txt");
@@ -19,7 +19,7 @@ fn into_visible_trees(
     &tree: &Tree,
 ) -> (i32, Vec<Tree>) {
     if tree.1 > highest {
-        let mut trees: Vec<Tree> = visible_trees.clone();
+        let mut trees: Vec<Tree> = visible_trees;
         trees.push(tree);
         (tree.1, trees)
     } else {
@@ -45,26 +45,22 @@ fn puzzle(input: &str) -> usize {
         .chain(
             forest
                 .iter()
-                .map(|row| row.iter().fold((-1, vec![]), into_visible_trees).1)
-                .flatten(),
+                .flat_map(|row| row.iter().fold((-1, vec![]), into_visible_trees).1),
         )
         .chain(
             forest
                 .iter()
-                .map(|row| row.iter().rev().fold((-1, vec![]), into_visible_trees).1)
-                .flatten(),
+                .flat_map(|row| row.iter().rev().fold((-1, vec![]), into_visible_trees).1),
         )
         .chain(
             forest_transpose
                 .iter()
-                .map(|row| row.iter().fold((-1, vec![]), into_visible_trees).1)
-                .flatten(),
+                .flat_map(|row| row.iter().fold((-1, vec![]), into_visible_trees).1),
         )
         .chain(
             forest_transpose
                 .iter()
-                .map(|row| row.iter().rev().fold((-1, vec![]), into_visible_trees).1)
-                .flatten(),
+                .flat_map(|row| row.iter().rev().fold((-1, vec![]), into_visible_trees).1),
         )
         .collect::<HashSet<Tree>>()
         .len()

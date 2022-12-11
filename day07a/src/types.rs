@@ -83,8 +83,8 @@ impl Node {
             .children
             .iter()
             .map(|(address, _)| {
-                let child = &memory[address.clone()];
-                child.total_size(&memory)
+                let child = &memory[(*address)];
+                child.total_size(memory)
             })
             .sum::<usize>();
 

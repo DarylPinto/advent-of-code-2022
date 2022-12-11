@@ -1,5 +1,5 @@
-use utils::matrix;
 use std::collections::HashMap;
+use utils::matrix;
 use Direction::*;
 
 fn main() {
