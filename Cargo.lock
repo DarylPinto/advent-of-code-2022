@@ -79,6 +79,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "day09a"
+version = "0.1.0"
+
+[[package]]
 name = "template"
 version = "0.1.0"
 
