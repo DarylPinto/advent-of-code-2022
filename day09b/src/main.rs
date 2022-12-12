@@ -29,7 +29,7 @@ fn move_tail(tail: &Knot, head: &Knot) -> Knot {
     let y_abs_diff = head.1.abs_diff(tail.1);
 
     if x_abs_diff <= 1 && y_abs_diff <= 1 {
-        return tail.clone();
+        return *tail;
     }
 
     let x_diff = head.0 - tail.0;
@@ -75,19 +75,22 @@ fn puzzle(input: &str) -> usize {
         .filter_map(|line| {
             let (direction, amount) = line.split_once(' ')?;
             let direction: Direction = direction.try_into().ok()?;
-            let amount = amount.parse::<i32>().ok()?;
+            let amount = amount.parse::<i64>().ok()?;
             Some((direction, amount))
         })
         .fold(
-            vec![(Knot::default(), Knot::default())],
+            vec![[Knot::default(); 10]],
             |visited, (direction, amount)| {
                 let mut visited = visited;
 
                 (0..amount).for_each(|_| {
-                    if let Some((head, tail)) = visited.last() {
-                        let next_head = move_head(head, &direction);
-                        let next_tail = move_tail(tail, &next_head);
-                        visited.push((next_head, next_tail));
+                    if let Some(rope) = visited.last() {
+                        let mut rope = *rope;
+                        rope[0] = move_head(&rope[0], &direction);
+                        for i in 1..rope.len() {
+                            rope[i] = move_tail(&rope[i], &rope[i - 1]);
+                        }
+                        visited.push(rope);
                     }
                 });
 
@@ -97,13 +100,13 @@ fn puzzle(input: &str) -> usize {
 
     visited
         .iter()
-        .map(|(_, tail)| tail)
+        .filter_map(|rope| rope.last())
         .collect::<HashSet<_>>()
         .len()
 }
 
 #[cfg(test)]
-mod day09a {
+mod day09b {
     use super::*;
 
     mod move_tail {
@@ -220,13 +223,13 @@ mod day09a {
     fn works_with_sample_input() {
         let input = include_str!("../sample.txt");
         let answer = puzzle(input);
-        assert_eq!(answer, 13);
+        assert_eq!(answer, 36);
     }
 
     #[test]
     fn works_with_puzzle_input() {
         let input = include_str!("../input.txt");
         let answer = puzzle(input);
-        assert_eq!(answer, 6087);
+        assert_eq!(answer, 2493);
     }
 }
