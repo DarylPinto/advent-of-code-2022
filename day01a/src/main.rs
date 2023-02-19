@@ -12,7 +12,7 @@ fn puzzle(input: &str) -> i32 {
 
     calorie_list
         .split(|item| item.is_none())
-        .map(|x| x.iter().filter_map(|&y| y).sum::<i32>())
+        .map(|chunk| chunk.iter().copied().flatten().sum::<i32>())
         .max()
         .unwrap_or_default()
 }
